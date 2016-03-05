@@ -1,1 +1,117 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+        <title>EVA Restaurants</title>
+	<meta name="description" content="EVA Restaurants dashboard">
+  	<meta name="author" content="Dieter De Witte">
+
+	<link rel="stylesheet" href="external/leaflet/leaflet.css" />
+	<link rel="stylesheet" type="text/css" href="external/jquery-ui/jquery-ui.min.css"/>
+
+	<!--<link rel="stylesheet" type="text/css" href="external/DataTables/datatables.min.css"/>-->
+
+
+        <!-- data-main attribute tells require.js to load
+             scripts/app.js after require.js loads. -->
+        <script data-main="js/app.js" src="js/require.js"></script>
+    </head>
+
+    <body>
+        
+        <h1> EVA search bar </h1>
+
+        <table>
+        	<tr>
+        		<td>
+        			Lattitude:
+        		</td>
+        		<td>
+        			<input type="text" id="lat" >
+        		</td>
+        		<td>
+        			Longitude:
+        		</td>
+        		<td>
+        			<input type="text" id="lon" >
+        		</td>
+        		<td>
+        			Radium (km):
+        		</td>
+        		<td>
+        			<input type="text" id="rad" >
+        		</td>
+        		<td>
+        			<input type="submit" id="draw_circle" value="Draw region">
+        		</td>
+
+        	</tr>
+        	<tr>
+        		<td>
+        			Street: 
+        		</td>
+        		<td>
+        			<input type="text" id="street" >
+        		</td>
+        		<td>
+        			Zip code:
+        		</td>
+        		<td>
+        			<input type="text" id="zip" >
+        		</td>
+           		<td>
+        			City:
+        		</td>
+        		<td>
+        			<input type="text" id="city" >
+        		</td>
+        		<td>
+        			<input type="submit" id="submit_searchaddress" value="Check nearby">
+        		</td>
+        	</tr>
+
+        	<tr>
+        		<td>
+        			Restaurant:
+        		</td>
+        		<td>
+        			<input type="text" id="restoname" >
+        		</td>
+        		<td>
+        			<input type="submit" id="submit_searchname" value="Find">
+        		</td>
+
+        	</tr>
+
+        	<tr>
+        		
+        		<td>
+        			<input type="submit" id="reset_map" value="Reset">
+        		</td>
+
+        	</tr>
+        	
+        </table>
+		
+
+		<h1> EVA restaurant map </h1>
+		
+		<div id="map" style="width: 1400px; height: 500px"></div>
+
+        <h1> EVA BI stats </h1>
+
+        <div id="bi1"></div>
+        <div id="bi2"></div>
+
+
+		
+
+
+    </body>
+</html>
+
+
+
+
+
+
