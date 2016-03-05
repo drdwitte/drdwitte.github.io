@@ -24,7 +24,9 @@ function ($, L, d3){
 		
 
 	var map;	
-
+	var center = {lat:51.05, lng:4.20};
+	var zoom = 9;
+	
 	function drawMap(){
 
 		console.log('drawmap');
@@ -32,8 +34,7 @@ function ($, L, d3){
 		mapcont = $('<div id="mapcontainer" style="width: 1400px; height: 500px"></div>');
 		$('#map').append(mapcont)
 
-		var center = {lat:51.05, lng:4.20};
-		var zoom = 9;	
+			
 		map = L.map('mapcontainer', {
 	    	center: center,
 	    	zoom: zoom,
@@ -141,20 +142,123 @@ function ($, L, d3){
 
 	$('#draw_circle').on('click', function(){
 
-		var lat = parseFloat($('input#lat').val());
-		var lon = parseFloat($('input#lon').val());
+		console.log(map.getCenter());
+		var lat = map.getCenter().lat;
+		var lon = map.getCenter().lng;
 
 		lat_radius = 1000*parseFloat($('input#rad').val());
 		//radius = lat_radius * 110.574;
-		var circle = L.circle([lat, lon], lat_radius, {
-					color: 'red',
+		var circle = L.circle(map.getCenter(), lat_radius, {
+					color: 'none',
 					fillColor: 'green',
 					fillOpacity: 0.5
 		}).addTo(map);
 	});
 
 	$('#submit_searchaddress').on('click', function(){
-		alert('You clicked "Check nearby"');
+
+		$("td#suggestion").text("")
+		//map.setView(center, zoom);
+
+		var street = $('input#street').val() || "";
+		var zip = $('input#zip').val() || "";
+		var city = $('input#city').val() || "";
+
+
+		var address_concat = street + " " + zip + " " +  city;
+		address_concat = address_concat.trim(); 
+		console.log(address_concat);
+		$.ajax({
+			type: "GET",
+			url: "http://loc.geopunt.be/v2/Suggestion",
+			dataType: 'jsonp',
+			accepts: {
+        		text: "application/json"
+    		},
+    		data: {
+    			q: address_concat,
+    		}
+		}).success(function(data) {
+    		
+    		var suggestions = data['SuggestionResult']
+    		console.log(suggestions);
+    		console.log(suggestions.length);
+
+    		if (suggestions.length == 0){
+    			$("td#suggestion").text("no suggestions")
+
+    		} else {
+
+    			if (suggestions.length > 3){
+    				$("td#suggestion").text("ambiguous => >3 suggestions")
+    			} else if (suggestions.length > 1){
+
+    				var sugg = "Did you mean? ";
+
+	    			for (var i=0; i<suggestions.length-1; i++){
+	    				sugg+= "\"" + suggestions[i] + "\"" + " or "	
+	    			}
+	    			sugg+= "\"" + suggestions[suggestions.length-1] + "\"";
+	    			$("td#suggestion").text(sugg);
+
+    			}
+
+
+    			$.ajax({
+					type: "GET",
+					url: "http://loc.geopunt.be/v2/Location",
+					dataType: 'jsonp',
+					accepts: {
+		        		text: "application/json"
+		    		},
+		    		data: {
+		    			q: suggestions[0],
+		    		}
+				}).success(function(latlonresponse) {
+
+
+					var arr_result = latlonresponse['LocationResult'];
+					//console.log(arr_result);
+					if (arr_result.length> 0){
+
+						var lat = parseFloat(arr_result[0]['Location']['Lat_WGS84']);
+						var lon = parseFloat(arr_result[0]['Location']['Lon_WGS84']);
+
+						console.log(lat);
+						console.log(lon);
+						
+
+						var lalo = new L.LatLng(lat, lon);
+
+						map.setView(lalo, 12);
+						//map.panTo(lalo);
+						//map.setZoom(12);
+
+
+						
+
+
+
+
+					} else {
+						console.log("No location results")
+
+					}
+
+					
+
+
+
+				});
+			}
+
+      		
+  		});
+		/*$.get( , { "q": "Klijtenstraat", "callback": true, 'Accept header':"'application/javascript" }, function(data){
+			console.log(data);
+		} );*/
+		//http://loc.geopunt.be/v2/Location?
+		//v2/Suggestion?q={q}
 	});
 
 
