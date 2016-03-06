@@ -26,6 +26,8 @@ function ($, L, d3){
 	var map;	
 	var center = {lat:51.05, lng:4.20};
 	var zoom = 9;
+	var restonames = {};
+
 	
 	function drawMap(){
 
@@ -69,7 +71,6 @@ function ($, L, d3){
 	 		//stats2 = {};
 	 		//console.log(data[0].tags);
 
-	 		var restonames = [];
 	 		var streetnames = {};
 	 		var citynames = {};
 
@@ -88,7 +89,7 @@ function ($, L, d3){
 	 			});
 	 			addMarkerToGroup(lat,lon,desc,eva_layers[ALL]);
 
-	 			restonames.push(data[i].name);
+	 			restonames[data[i].name]= new L.LatLng(lat,lon);
 	 			streetnames[data[i].street]=1;
 	 			citynames[data[i].city]=1;
 
@@ -118,7 +119,7 @@ function ($, L, d3){
 
 
 			$('#restoname').autocomplete({
-      			source: restonames
+      			source: Object.keys(restonames)
     		});
 
     		$('#street').autocomplete({
@@ -254,11 +255,7 @@ function ($, L, d3){
 
       		
   		});
-		/*$.get( , { "q": "Klijtenstraat", "callback": true, 'Accept header':"'application/javascript" }, function(data){
-			console.log(data);
-		} );*/
-		//http://loc.geopunt.be/v2/Location?
-		//v2/Suggestion?q={q}
+
 	});
 
 
@@ -266,8 +263,24 @@ function ($, L, d3){
 
 	$('#submit_searchname').on('click', function(){
 
+		var restoname = $("input#restoname").val();
 
-		alert('You clicked "Find"');
+		console.log(restoname);
+
+		if (restoname in restonames){
+
+			var lalo = restonames[restoname];
+			map.setView(lalo, 14);
+			console.log(lalo);
+			var circle = L.circle(lalo, 250, {
+					color: 'none',
+					fillColor: 'red',
+					fillOpacity: 0.5
+			}).addTo(map);
+
+
+		}
+
 	});
 
 	$('#reset_map').on('click', function(){
