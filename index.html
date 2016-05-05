@@ -1,153 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-	<meta charset="utf-8">
-        <title>EVA Restaurants</title>
-	<meta name="description" content="EVA Restaurants dashboard">
-  	<meta name="author" content="Dieter De Witte">
 
-	<link rel="stylesheet" href="external/leaflet/leaflet.css" />
-	<link rel="stylesheet" type="text/css" href="external/jquery-ui/jquery-ui.min.css"/>
+<head>
 
-	<!--<link rel="stylesheet" type="text/css" href="external/DataTables/datatables.min.css"/>-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title>Dieter De Witte</title>
 
-        <!-- data-main attribute tells require.js to load
-             scripts/app.js after require.js loads. -->
-        <script data-main="js/app.js" src="js/require.js"></script>
-    </head>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <body>
-        
-        <h1> EVA search bar </h1>
+    <!-- Custom CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
 
-        <table>
-        	
-        	<tr>
-        		<td>
-        			Street: 
-        		</td>
-        		<td>
-        			<input type="text" id="street" >
-        		</td>
-        		<td>
-        			Zip code:
-        		</td>
-        		<td>
-        			<input type="text" id="zip" >
-        		</td>
-           		<td>
-        			City:
-        		</td>
-        		<td>
-        			<input type="text" id="city" >
-        		</td>
-        		<td>
-        			<input type="submit" id="submit_searchaddress" value="Check nearby">
-        		</td>
-       
-        		<td id="suggestion">
-        			
-        		</td>
-        	</tr>
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-        	<tr>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			Radius (km):
-        		</td>
-        		<td>
-        			<input type="text" id="rad" >
-        		</td>
-        		<td>
-        			<input type="submit" id="draw_circle" value="Draw region">
-        		</td>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-        	</tr>
+</head>
 
-        	<tr>
-        	<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			Restaurant:
-        		</td>
-        		<td>
-        			<input type="text" id="restoname" >
-        		</td>
-        		<td>
-        			<input type="submit" id="submit_searchname" value="Find">
-        		</td>
+<body>
 
-        	</tr>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Dieter De Witte</a>-->
+            </div>
 
-        	<tr>
-        	</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			
-        		</td>
-        		<td>
-        			<input type="submit" id="reset_map" value="Reset">
-        		</td>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="cv.html">CV</a>
+                    </li>
 
-        	</tr>
-        	
-        </table>
-		
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-		<h1> EVA restaurant map </h1>
-		
-		<div id="map" style="width: 1400px; height: 500px"></div>
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/hippo.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Dieter De Witte</h1>
+                        <hr class="small">
+                        <!--<span class="subheading">Big Data Scientist / Hippo enthusiast</span>-->
+	 <ul class="list-inline text-center">
+		                
+		                <li>
+		                    <a href="https://be.linkedin.com/in/dieter-de-witte-08614865">
+		                        <span class="fa-stack fa-lg">
+		                            <i class="fa fa-circle fa-stack-2x" style="color:white"></i>
+		                            <i class="fa fa-linkedin fa-stack-1x fa-inverse" style="color:black"></i>
+		                        </span>
+		                    </a>
+		                </li>
+		                <li>
+		                    <a href="https://github.com/drdwitte">
+		                        <span class="fa-stack fa-lg">
+		                            <i class="fa fa-circle fa-stack-2x" style="color:white"></i>
+		                            <i class="fa fa-github fa-stack-1x fa-inverse" style="color:black"></i>
+		                        </span>
+		                    </a>
+		                </li>
+				<li>
+		                    <a href="http://stackoverflow.com/users/2299864/ddw">
+		                        <span class="fa-stack fa-lg">
+		                            <i class="fa fa-circle fa-stack-2x" style="color:white"></i>
+		                            <i class="fa fa-stack-overflow fa-stack-1x fa-inverse" style="color:black"></i>
+		                        </span>
+		                    </a>
+		                </li>
+		            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <h1> EVA BI stats </h1>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            Man must explore, and this is exploration at its greatest
+                        </h2>
+                        <h3 class="post-subtitle">
+                            This is an example post - will be removed soon
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on xx/xx/xx</p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="https://hippomongous.wordpress.com/2015/03/25/data-innovation-summit-dashboard/">
+                        <h2 class="post-title">
+                            Data Innovation Summit Dashboard (2015)
+                        </h2>
+                    </a>
+                    <p class="post-meta">Posted by <a href="index.html">Dieter De Witte</a> on March 25, 2015</p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            Coming Soon: Designing a search engine for vegetarian restos with EVA.
+                        </h2>
+                        <h3 class="post-subtitle">
+                            
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="index.html">Dieter De Witte</a> on COMING SOON</p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            Motif Discovery in genomic sequences
+                        </h2>
+                        <h3 class="post-subtitle">
+                            
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="index.html">Dieter De Witte</a> on COMING SOON</p>
+                </div>
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts &rarr;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-        <div id="bi1"></div>
-        <div id="bi2"></div>
+    <hr>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                   
+                    <p class="copyright text-muted">Copyright &copy; Dieter De Witte 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-		
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
-    </body>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
 </html>
-
-
-
-
-
-
